@@ -1,0 +1,51 @@
+{% extends "student_register/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-8 text-left">
+            <h2>List of students</h2>
+        </div>
+        <div class="col-md-4 text-right">
+            <a href="{% url 'student_register' %}" class="btn btn-success btn-block">
+                <i class="fa-solid fa-plus"></i> Add new
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+                <th>Father's lastname</th>
+                <th>Mother's lastname</th>
+                <th>Names</th>
+                <th>Birth date</th>
+                <th>Sex</th>
+                <th>CURP</th>
+            </thead>
+            <tbody>
+                {% for student in student_list %}
+                <tr>
+                    <td>{{student.father_lastname}}</td>
+                    <td>{{student.mother_lastname}}</td>
+                    <td>{{student.names}}</td>
+                    <td>{{student.birth_date}}</td>
+                    <td>{{student.sex}}</td>
+                    <td>{{student.curp}}</td>
+                    <td>
+                        <a href="{% url 'student_update' student.curp %}" class="btn text-primary px-0">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </a>
+                        <form action="{% url 'student_delete' student.curp%}" method="post" class="md-6 d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn text-danger">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
